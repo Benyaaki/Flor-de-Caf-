@@ -85,16 +85,7 @@
   const DATA = window.MENU || [];
 
   function priceHTML(p) { return `<span class="mp">${p}</span>`; }
-  // Ilustración decorativa por categoría (Calientes = pers1 del home; el resto, temporal)
-  const CAT_FIG = {
-    calientes: { src: "pers1d.svg", cls: "cf-a" }, // Calientes: el personaje del home (SVG)
-    sincafe:   { src: "pers2.svg",  cls: "cf-b" }, // SVG actualizado
-    frias:     { src: "pers3.svg",  cls: "cf-c" },
-    origenes:  { src: "pers4.svg",  cls: "cf-d" },
-    dulces:    { src: "pers5.svg",  cls: "cf-e" },
-    salados:   { src: "pers6.svg",  cls: "cf-f" },
-    otras:     { src: "pers7.svg",  cls: "cf-g" }
-  };
+
   function renderCat(cat) {
     const rows = cat.items.map(it => `
       <div class="mrow">
@@ -104,8 +95,10 @@
         </div>
         ${priceHTML(it.p)}
       </div>`).join("");
-    const fig = CAT_FIG[cat.id];
-    // Insertar contenido del panel SIN la imagen
+
+    const oldFig = $(".carta-fig");
+    if (oldFig) oldFig.remove();
+
     panelEl.innerHTML = `
       <div class="panel-head">
         <div class="panel-kicker">${cat.kicker || ""}</div>
@@ -116,18 +109,6 @@
       <div class="menu-list">${rows}</div>
       ${cat.nota ? `<div style="text-align:center"><span class="menu-nota">${cat.nota}</span></div>` : ""}
     `;
-    // Insertar la imagen FUERA del panel, directamente en .carta
-    const cartaEl = $("#carta");
-    const oldFig = $(".carta-fig", cartaEl);
-    if (oldFig) oldFig.remove();
-    if (fig) {
-      const img = document.createElement("img");
-      img.className = "carta-fig " + fig.cls;
-      img.src = "assets/img/" + fig.src;
-      img.alt = "";
-      img.setAttribute("aria-hidden", "true");
-      cartaEl.appendChild(img);
-    }
     // animate rows in
     const mrows = $$(".mrow", panelEl);
     if (window.gsap && !reduce) {
