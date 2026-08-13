@@ -290,13 +290,15 @@ html.lenis,html.lenis body{height:auto}
 .or-art{position:relative;display:grid;place-items:center;min-height:360px;margin-top:2rem;transform:translateY(50px)}
 .or-art::before{content:"";position:absolute;width:min(38vw,440px);aspect-ratio:1;border-radius:50%;
   background:radial-gradient(circle,rgba(35,35,29,.06),transparent 60%);z-index:0}
-.or-art svg{position:relative;z-index:2;width:min(47vw,550px);height:auto;
+.or-art-desktop{display:block;position:relative;z-index:2;width:min(47vw,550px);height:auto;
   filter:drop-shadow(0 14px 28px rgba(0,0,0,.08))}
+.or-art-mobile{display:none}
 @media(max-width:860px){
   .or-grid{grid-template-columns:1fr}
-  .or-art{order:-1;min-height:auto;margin-top:1rem;transform:translateY(25px);padding:1rem 0 1.5rem}
-  .or-art svg{width:min(90vw,420px)}
-  .or-art::before{width:min(80vw,360px)}
+  .or-art{order:-1;min-height:auto;margin-top:.5rem;transform:none;padding:1rem 0 1.5rem}
+  .or-art-desktop{display:none!important}
+  .or-art-mobile{display:block!important;position:relative;z-index:2;width:min(70vw,280px);height:auto;margin:0 auto;filter:drop-shadow(0 14px 28px rgba(0,0,0,.08))}
+  .or-art::before{width:min(70vw,300px)}
   .or-list span{max-width:18ch}
 }
 
