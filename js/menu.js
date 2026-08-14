@@ -1,10 +1,23 @@
 /* =====================================================================
-   CARTA DE FLOR DE CAFÉ  ·  datos editables
-   Para actualizar la carta, edita este archivo:
-   - Cambia nombre, precio o descripción de cualquier producto.
-   - "precio" puede ser un texto libre ("$2.500", "$3.290 M / $3.990 G").
-   No hace falta tocar nada más; la web se arma sola desde aquí.
+   CARTA DE FLOR DE CAFÉ
+   ---------------------------------------------------------------------
+   FUENTE DE LA CARTA (dónde lee la web los productos y precios):
+
+   window.CARTA_SHEET_CSV  ->  dirección de un archivo CSV.
+       Puede ser:
+         a) La URL de una hoja de Google Sheets "publicada como CSV"
+            (así la dueña del café edita la carta desde una planilla).
+         b) Un archivo local del sitio (para probar, como ahora).
+       Si esa dirección falla o no hay internet, la web usa
+       automáticamente la CARTA LOCAL DE RESPALDO de más abajo.
+       Para desactivar Google Sheets, deja la comilla vacía:  ""
+
+   CARTA LOCAL DE RESPALDO (window.MENU):
+       Copia de seguridad y estructura de las secciones (títulos,
+       orden, notas). Siempre debería reflejar la carta actual.
    ===================================================================== */
+window.CARTA_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2CMI57q96CszvFk7oCbZ15_GFiV89xPcA6tSlnSy3gRKvsD62ecN37S9e9U8e_2EF4q_gQRWPgoHh/pub?gid=1484008878&single=true&output=csv";
+
 window.MENU = [
   {
     id: "calientes",

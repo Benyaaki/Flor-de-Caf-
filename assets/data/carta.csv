@@ -1,0 +1,62 @@
+Categoria,Producto,Descripcion,Precio
+Calientes,Espresso,Shot de café doble,$2.500
+Calientes,Lungo,Shot doble + agua · extracción prolongada,$2.500
+Calientes,Americano,Shot de café + agua,$2.990
+Calientes,Cortado,Shot doble + leche,$2.990
+Calientes,Capuccino,Shot + leche + espuma,$3.290 M · $3.990 G
+Calientes,Capuccino sabor,Shot + leche + espuma + syrup,$3.590 M · $4.290 G
+Calientes,Latte,Shot + leche micro espumada,$2.990 M · $3.500 G
+Calientes,Flat White,Shot doble + micro espuma sedosa,$3.190
+Calientes,Mocaccino,Café + chocolate + leche,$3.690 M · $4.190 G
+Calientes,Dirty Chai,Café + concentrado de té y especias + leche,$4.190
+Sin café,Matcha Latte,Ceremonial sin endulzar + leche,$3.990
+Sin café,Chai Latte,A base de té y especias + leche,$3.490 M · $3.990 G
+Sin café,Taza de té artesanal,Té de hoja,$1.800
+Sin café,Tetera artesanal,Para 2 · Para 4,$3.500 · $5.990
+Sin café,Chocolate,Cremoso y reconfortante,$2.990 M · $4.190 G
+Frías,Café helado,Doble + helado de vainilla + leche + crema chantilly,$5.490
+Frías,Cold Brew,"Macerado de café frío, alto en cafeína",$3.990
+Frías,Espreso naranja,Doble + jugo de naranja + hielo,$4.590
+Frías,Ice Latte,Shot + leche microespumada + hielo,$3.690
+Frías,Ice Latte sabor,Shot + leche microespumada + syrup,$3.990
+Frías,Matcha Latte Ice,Ceremonial sin endulzar + leche + hielo,$4.190
+Frías,Moca Ice,Shot + chocolate + leche + hielo,$4.290
+Frías,Affogato,Shot de café + helado de vainilla,$4.190
+Frías,Chai Latte Ice,Té y especias + leche + hielo,$3.990
+Frías,Coffe Orange Spritz,Doble + jugo de naranja + hielo + agua tónica o gas,$4.990
+Frías,Jugo natural,De la fruta del día,$3.500
+Frías,Copa de helado kids,2 bolas de helado de vainilla + topping,$2.500
+Orígenes,Bourbon Ají,"Lima limón, ají, flor de Jamaica, frutos amarillos, coco · cuerpo medio",$6.990
+Orígenes,Bourbon Chiroso,"Limoncillo, dulce de leche, caramelo, licor · acidez media, cuerpo medio",$5.990
+Orígenes,Caturra Finca Milán,"Ponche de frutas, yogurt de mora, vainilla",$5.990
+Orígenes,Bolivia Hermanos Fernández,"Arándano deshidratado, naranja, cedrón, almendras tostadas",$5.990
+Dulces,Queque,,$1.990
+Dulces,Torta,,$4.990
+Dulces,Pie,,$4.290
+Dulces,Kuchen sureño,,$4.290
+Dulces,Cheesecake,,$4.290
+Dulces,Rollo de canela,,$2.990
+Dulces,Alfajores de maicena,,$1.890
+Dulces,Brownie nueces,,$2.490
+Dulces,Porción galletas · 5 un.,,$1.800
+Dulces,Medialunas · manjar,Marplatense,$2.200
+Dulces,Medialunas · crema,Marplatense,$2.200
+Dulces,Medialunas · nutella,Marplatense,$2.500
+Dulces,Berlines argentinos,,$1.490
+Dulces,Muffins,,$2.990
+Dulces,Donas,,$1.990
+Dulces,Brazo de reina,,$3.500
+Dulces,Chilenito,,$3.990
+Salados,Molde jamón queso,,$3.500
+Salados,Croissant jamón queso,,$4.990
+Salados,Rústico capresse,,$4.990
+Salados,Trozo pizza argentina,,$3.490
+Salados,Empanadas argentina,,$3.200
+Salados,Rústico mechada queso,,$6.990
+Salados,Tostadas mantequilla,Pan de molde tostado + porción de mantequilla,$2.500
+Salados,"Paila de huevo, queso y jamón","Huevos revueltos, láminas de jamón y queso + pan ciabatta",$6.990
+Otras,Bebida lata · CCU,,$1.500
+Otras,"Bebida lata · Coca, Fanta, Sprite",,$1.800
+Otras,Jugo néctar,,$1.350
+Otras,Agua con o sin gas,,$1.500
+Otras,Bebida energética,,$2.200

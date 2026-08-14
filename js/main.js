@@ -106,7 +106,93 @@
   /* ---------- RENDER CARTA ---------- */
   const tabsEl = $("#cartaTabs");
   const panelEl = $("#cartaPanel");
-  const DATA = window.MENU || [];
+  let DATA = window.MENU || [];
+
+  /* ---- Fuente de datos: CSV (Google Sheets) con respaldo local ---- */
+  // Parser CSV robusto (soporta campos entre comillas con comas o saltos).
+  function parseCSV(text) {
+    text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    const rows = []; let row = [], field = "", q = false, i = 0;
+    while (i < text.length) {
+      const c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { field += '"'; i += 2; continue; } q = false; i++; continue; }
+        field += c; i++; continue;
+      }
+      if (c === '"') { q = true; i++; continue; }
+      if (c === ",") { row.push(field); field = ""; i++; continue; }
+      if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; i++; continue; }
+      field += c; i++;
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows.filter(r => r.some(c => c.trim() !== ""));
+  }
+  const norm = s => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+
+  // Convierte el CSV en la estructura de la carta, respetando el orden y los
+  // metadatos (título, nota, intro) de la carta local de respaldo.
+  function csvToMenu(text) {
+    const rows = parseCSV(text);
+    if (rows.length < 2) return null;
+    // Localiza la fila de encabezados (puede haber filas decorativas/título arriba).
+    const hIdx = rows.findIndex(r => {
+      const h = r.map(norm);
+      return h.includes("categoria") && h.includes("producto") && h.includes("precio");
+    });
+    if (hIdx < 0) return null;
+    const header = rows[hIdx].map(norm);
+    const ci = {
+      cat: header.indexOf("categoria"),
+      prod: header.indexOf("producto"),
+      desc: header.indexOf("descripcion"),
+      price: header.indexOf("precio")
+    };
+    if (ci.cat < 0 || ci.prod < 0 || ci.price < 0) return null;
+
+    const skeleton = window.MENU || [];
+    const idByName = {};
+    skeleton.forEach(c => {
+      idByName[norm(c.id)] = c.id;
+      idByName[norm(c.tab)] = c.id;
+      idByName[norm(c.titulo)] = c.id;
+    });
+
+    const itemsByCat = {};
+    for (let r = hIdx + 1; r < rows.length; r++) {
+      const row = rows[r];
+      const prod = (row[ci.prod] || "").trim();
+      if (!prod) continue;
+      const canon = idByName[norm(row[ci.cat])];
+      if (!canon) continue; // categoría desconocida -> se ignora la fila
+      (itemsByCat[canon] = itemsByCat[canon] || []).push({
+        n: prod,
+        d: ci.desc >= 0 ? (row[ci.desc] || "").trim() : "",
+        p: (row[ci.price] || "").trim()
+      });
+    }
+    if (!Object.keys(itemsByCat).length) return null;
+
+    // Mezcla: mantiene orden/estilos del esqueleto; reemplaza items si el CSV
+    // trae esa categoría (si no, conserva los del respaldo).
+    return skeleton.map(c => {
+      const items = itemsByCat[c.id];
+      return items && items.length ? Object.assign({}, c, { items }) : Object.assign({}, c);
+    });
+  }
+
+  function loadCartaFromCSV() {
+    const url = window.CARTA_SHEET_CSV;
+    if (!url) return Promise.resolve(null);
+    const ctrl = ("AbortController" in window) ? new AbortController() : null;
+    const t = ctrl ? setTimeout(() => ctrl.abort(), 6000) : null;
+    const opts = { cache: "no-store" };
+    if (ctrl) opts.signal = ctrl.signal;
+    return fetch(url, opts)
+      .then(r => r.ok ? r.text() : Promise.reject(r.status))
+      .then(txt => csvToMenu(txt))
+      .then(m => { if (t) clearTimeout(t); return m; },
+            e => { if (t) clearTimeout(t); throw e; });
+  }
 
   function priceHTML(p) { return `<span class="mp">${p}</span>`; }
 
@@ -181,8 +267,6 @@
     if (idx > 0 && tabs[idx]) tabs[idx].click();
     else if (DATA[0]) renderCat(DATA[0]);
   }
-  if (tabsEl && DATA.length) buildTabs();
-
   /* ---------- CARTA PREVIEW (home) ---------- */
   const previewEl = $("#cartaPreview");
   function pick(catId, startsWith) {
@@ -208,7 +292,19 @@
     const total = DATA.reduce((s, c) => s + c.items.length, 0);
     const mc = $("#menuCount"); if (mc) mc.textContent = "+" + total;
   }
-  if (previewEl && DATA.length) renderPreview();
+
+  // Render de la carta: primero intenta el CSV (Google Sheets); si no,
+  // usa la carta local de respaldo. Se dibuja una sola vez, ya con los datos.
+  function initCarta() {
+    if (tabsEl && DATA.length) { tabsEl.innerHTML = ""; buildTabs(); }
+    if (previewEl && DATA.length) renderPreview();
+  }
+  if (tabsEl || previewEl) {
+    loadCartaFromCSV()
+      .then(fresh => { if (fresh && fresh.length) DATA = fresh; })
+      .catch(() => { /* sin red o CSV inválido -> se usa el respaldo local */ })
+      .then(initCarta);
+  }
 
   /* ---------- MOMENTOS gallery ---------- */
   const GALLERY = [
