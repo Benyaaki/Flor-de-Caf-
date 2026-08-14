@@ -11,9 +11,39 @@
 
   /* ---------- PAGE INIT ---------- */
   function bootPage() {
+    document.body.classList.remove("page-exiting");
     document.body.style.overflow = "";
     startHero();
   }
+
+  // reset on back/forward browser navigation
+  window.addEventListener("pageshow", () => {
+    document.body.classList.remove("page-exiting");
+  });
+
+  /* ---------- TRANSICIÓN DE PÁGINA SUAVE ---------- */
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (!href) return;
+    
+    // Transición suave al cambiar entre index.html y carta.html
+    const isHtmlLink = href.includes(".html") && !href.startsWith("#") && a.target !== "_blank";
+    if (isHtmlLink && !reduce) {
+      const targetUrl = a.href;
+      const currentPath = window.location.pathname.split("/").pop() || "index.html";
+      const targetFileName = href.split("#")[0];
+      
+      if (targetFileName && targetFileName !== currentPath) {
+        e.preventDefault();
+        document.body.classList.add("page-exiting");
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 300);
+      }
+    }
+  });
 
   /* ---------- LENIS smooth scroll ---------- */
   let lenis = null;
