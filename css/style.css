@@ -521,7 +521,7 @@ main{animation:pageFadeIn .4s cubic-bezier(0.16, 1, 0.3, 1) forwards}
 @media(max-width:600px){.foot-bottom{justify-content:center;text-align:center}}
 
 /* ---------- carta.html: sticky tabs + counts ---------- */
-.page-carta .carta-tabs{position:sticky;top:62px;z-index:60;margin:0 -1rem;padding:1rem;
+.page-carta .carta-tabs{position:sticky;top:62px;z-index:60;margin:0 -1rem 3rem;padding:1rem;
   background:rgba(255,249,241,.92);backdrop-filter:blur(12px);border-radius:0 0 20px 20px;
   box-shadow:0 10px 30px -15px rgba(32,33,28,.12)}
 .tab .cnt{opacity:.6;margin-left:.35rem}
