@@ -9,14 +9,8 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   if (STATIC) document.documentElement.classList.add("flat");
 
-  /* ---------- PRELOADER ---------- */
-  const pre = $("#preloader");
-  const preBar = $(".pre-bar span");
-  if (preBar) {
-    requestAnimationFrame(() => { preBar.style.transition = "width 1s ease"; preBar.style.width = "100%"; });
-  }
-  function hidePreloader() {
-    if (pre) pre.classList.add("done");
+  /* ---------- PAGE INIT ---------- */
+  function bootPage() {
     document.body.style.overflow = "";
     startHero();
   }
@@ -315,15 +309,15 @@
   }
 
   /* ---------- BOOT ---------- */
-  window.addEventListener("load", () => {
+  function boot() {
+    bootPage();
     initScroll();
-    setTimeout(hidePreloader, 650);
     if (window.ScrollTrigger) ScrollTrigger.refresh();
-  });
-  // safety: if load already fired
-  if (document.readyState === "complete") {
-    initScroll(); setTimeout(hidePreloader, 400);
+  }
+
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    boot();
   } else {
-    document.body.style.overflow = "hidden";
+    document.addEventListener("DOMContentLoaded", boot);
   }
 })();
