@@ -75,24 +75,6 @@
     });
   });
 
-  /* ---------- CUSTOM CURSOR ---------- */
-  const cursor = $(".cursor");
-  if (cursor && window.matchMedia("(hover:hover)").matches) {
-    let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy;
-    addEventListener("mousemove", e => { tx = e.clientX; ty = e.clientY; });
-    (function loop() {
-      cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
-      cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
-      requestAnimationFrame(loop);
-    })();
-    document.addEventListener("mouseover", e => {
-      if (e.target.closest("[data-cursor],a,button,.tab")) cursor.classList.add("grow");
-    });
-    document.addEventListener("mouseout", e => {
-      if (e.target.closest("[data-cursor],a,button,.tab")) cursor.classList.remove("grow");
-    });
-  }
-
   /* ---------- NAV show/hide + solid ---------- */
   const nav = $("#nav");
   let lastY = 0;
